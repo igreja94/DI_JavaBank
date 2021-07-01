@@ -26,6 +26,10 @@ public class Customer {
         return name;
     }
 
+    public Map<Integer, Account> getAccounts() {
+        return accounts;
+    }
+
     /**
      * Sets the account manager
      *

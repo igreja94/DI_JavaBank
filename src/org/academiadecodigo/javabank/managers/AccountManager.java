@@ -23,6 +23,14 @@ public class AccountManager {
         this.accountMap = new HashMap<>();
     }
 
+    public static int getNumberAccounts() {
+        return numberAccounts;
+    }
+
+    public Map<Integer, Account> getAccountMap() {
+        return accountMap;
+    }
+
     /**
      * Creates a new {@link Account}
      *

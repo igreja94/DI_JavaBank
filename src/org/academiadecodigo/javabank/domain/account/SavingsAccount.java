@@ -48,4 +48,9 @@ public class SavingsAccount extends Account {
     public boolean canWithdraw() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Type: " + getAccountType().toString() + " , ID: " + getId();
+    }
 }

@@ -23,4 +23,9 @@ public class CheckingAccount extends Account {
     public AccountType getAccountType() {
         return AccountType.CHECKING;
     }
+
+    @Override
+    public String toString() {
+        return "Type: " + getAccountType().toString() + " , ID: " + getId();
+    }
 }
