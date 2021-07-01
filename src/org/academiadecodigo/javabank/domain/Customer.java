@@ -12,8 +12,19 @@ import java.util.Map;
  */
 public class Customer {
 
+    private String name;
     private AccountManager accountManager;
     private Map<Integer, Account> accounts = new HashMap<>();
+
+    // Customer constructor
+    public Customer(String name){
+        this.name = name;
+    }
+
+    // Get customer name;
+    public String getName() {
+        return name;
+    }
 
     /**
      * Sets the account manager
