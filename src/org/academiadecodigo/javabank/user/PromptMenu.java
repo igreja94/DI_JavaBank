@@ -74,6 +74,7 @@ public class PromptMenu {
         int answer = prompt.getUserInput(menuInput);
 
         switch (answer) {
+
             case 1:
                 checkBalance();
                 break;
@@ -108,16 +109,21 @@ public class PromptMenu {
         switch (answer) {
 
             case 1:
+
                 customer.openAccount(AccountType.CHECKING);
                 System.out.println("Created new checking account!");
                 mainMenu();
                 break;
+
             case 2:
+
                 customer.openAccount(AccountType.SAVINGS);
                 System.out.println("Created new savings account");
                 mainMenu();
                 break;
+
             default:
+
                 break;
 
         }
@@ -128,12 +134,14 @@ public class PromptMenu {
     public void checkBalance() {
 
         String[] options = getAccountsIDs(customer);
-        menuInput = new MenuInputScanner(options);
-        menuInput.setMessage("Which account would you like to check the balance?");
 
         if (options.length > 0) {
 
+            menuInput = new MenuInputScanner(options);
+            menuInput.setMessage("Which account would you like to check the balance?");
+
             int answer = prompt.getUserInput(menuInput);
+
             System.out.println(customer.getAccounts().get(answer).getBalance() + "€");
             mainMenu();
             return;
@@ -141,6 +149,7 @@ public class PromptMenu {
         }
 
         System.out.println("No accounts created");
+        mainMenu();
 
     }
 
@@ -148,25 +157,32 @@ public class PromptMenu {
     public void debit() {
 
         String[] options = getAccountsIDs(customer);
-        menuInput = new MenuInputScanner(options);
-        menuInput.setMessage("In which account would you like to withdraw money from?");
 
-        int answer = prompt.getUserInput(menuInput);
+        if (options.length > 0) {
 
-        doubleInput.setMessage("How much money would you like to withdraw?");
-        double ammount = prompt.getUserInput(doubleInput);
+            menuInput = new MenuInputScanner(options);
+            menuInput.setMessage("In which account would you like to withdraw money from?");
 
-        if (customer.getAccounts().get(answer).canDebit(ammount)) {
+            int answer = prompt.getUserInput(menuInput);
 
-            customer.getAccounts().get(answer).debit(ammount);
-            System.out.println("Withdraw completed: " + answer);
-            System.out.println("New balance is " + customer.getAccounts().get(answer).getBalance() + " €");
+            doubleInput.setMessage("How much money would you like to withdraw?");
+            double ammount = prompt.getUserInput(doubleInput);
+
+            if (customer.getAccounts().get(answer).canDebit(ammount)) {
+
+                customer.getAccounts().get(answer).debit(ammount);
+                System.out.println("Withdraw completed: " + answer);
+                System.out.println("New balance is " + customer.getAccounts().get(answer).getBalance() + " €");
+                mainMenu();
+                return;
+
+            }
+
+            System.out.println("Operation not allowed");
             mainMenu();
-            return;
-
         }
 
-        System.out.println("Operation not allowed");
+        System.out.println("No accounts created");
         mainMenu();
 
     }
@@ -175,26 +191,30 @@ public class PromptMenu {
     public void credit() {
 
         String[] options = getAccountsIDs(customer);
-        menuInput = new MenuInputScanner(options);
-        menuInput.setMessage("In which account would you like to depoisit money on?");
 
-        int answer = prompt.getUserInput(menuInput);
+        if (options.length > 0) {
+            menuInput = new MenuInputScanner(options);
+            menuInput.setMessage("In which account would you like to depoisit money on?");
 
-        doubleInput.setMessage("How much money would you like to deposit?");
-        double ammount = prompt.getUserInput(doubleInput);
+            int answer = prompt.getUserInput(menuInput);
 
-        if (customer.getAccounts().get(answer).canCredit(ammount)) {
+            doubleInput.setMessage("How much money would you like to deposit?");
+            double ammount = prompt.getUserInput(doubleInput);
 
-            customer.getAccounts().get(answer).credit(ammount);
+            if (customer.getAccounts().get(answer).canCredit(ammount)) {
 
-            System.out.println("Depoist completed: " + ammount);
-            System.out.println("New balance is " + customer.getAccounts().get(answer).getBalance() + " €");
+                customer.getAccounts().get(answer).credit(ammount);
+
+                System.out.println("Depoist completed: " + ammount);
+                System.out.println("New balance is " + customer.getAccounts().get(answer).getBalance() + " €");
+                mainMenu();
+                return;
+            }
+
+            System.out.println("Operation not allowed");
             mainMenu();
-            return;
-        }
 
-        System.out.println("Operation not allowed");
-        mainMenu();
+        }
 
     }
 
