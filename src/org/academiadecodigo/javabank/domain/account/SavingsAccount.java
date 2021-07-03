@@ -1,5 +1,7 @@
 package org.academiadecodigo.javabank.domain.account;
 
+import org.academiadecodigo.javabank.domain.Bank;
+
 /**
  * A savings account domain entity which requires a minimum balance
  * and can only be used for transferring money, not for debiting
@@ -53,4 +55,6 @@ public class SavingsAccount extends Account {
     public String toString() {
         return "Type: " + getAccountType().toString() + " , ID: " + getId();
     }
+
+
 }

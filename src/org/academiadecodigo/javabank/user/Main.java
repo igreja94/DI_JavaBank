@@ -13,7 +13,7 @@ public class Main {
 
 
         PromptMenu bankMenu = new PromptMenu(manager,bank);
-        bankMenu.init(new Customer("Daniel"));
+        bankMenu.init();
 
     }
 

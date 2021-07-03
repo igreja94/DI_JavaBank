@@ -2,6 +2,7 @@ package org.academiadecodigo.javabank.domain;
 
 import org.academiadecodigo.javabank.managers.AccountManager;
 
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +34,11 @@ public class Bank {
         customer.setAccountManager(accountManager);
     }
 
+    public Set<Customer> getCustomers() {
+        return customers;
+    }
+
+
     /**
      * Gets the total balance of the bank
      *
@@ -47,5 +53,57 @@ public class Bank {
         }
 
         return balance;
+    }
+
+    public void setCustomers(Set<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public class Filer {
+
+        private ObjectInputStream fileInput;
+        private ObjectOutputStream fileOutput;
+
+
+        {
+            try {
+
+                fileInput = new ObjectInputStream(new FileInputStream("bank_database.txt"));
+                fileOutput = new ObjectOutputStream(new FileOutputStream("bank_database.txt"));
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        public void saveToDatabase() {
+
+            for (Customer customer : customers) {
+                try {
+                    fileOutput.writeObject(customer);
+                    fileOutput.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        public Set<Customer> loadFromDatabase() {
+
+            Set<Customer> readCustomers = new HashSet<>();
+
+            try {
+                readCustomers.add((Customer) fileInput.readObject());
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return readCustomers;
+
+        }
+
     }
 }
