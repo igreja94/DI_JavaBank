@@ -1,5 +1,7 @@
 package org.academiadecodigo.javabank.domain.account;
 
+import java.io.Serializable;
+
 /**
  * A generic account domain entity to be used as a base for concrete types of accounts
  */

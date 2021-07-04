@@ -2,13 +2,14 @@ package org.academiadecodigo.javabank.managers;
 
 import org.academiadecodigo.javabank.domain.account.*;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Responsible for account management
  */
-public class AccountManager {
+public class AccountManager implements Serializable {
 
     private static int numberAccounts = 0;
     private Map<Integer, Account> accountMap;

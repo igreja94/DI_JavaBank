@@ -4,13 +4,14 @@ import org.academiadecodigo.javabank.domain.account.Account;
 import org.academiadecodigo.javabank.domain.account.AccountType;
 import org.academiadecodigo.javabank.managers.AccountManager;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * The customer domain entity
  */
-public class Customer {
+public class Customer implements Serializable {
 
     private String name;
     private AccountManager accountManager;
