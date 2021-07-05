@@ -1,28 +1,28 @@
 package org.academiadecodigo.javabank.application.operations.transaction;
 
-import org.academiadecodigo.javabank.application.BankApplication;
 import org.academiadecodigo.javabank.application.UserOptions;
+import org.academiadecodigo.javabank.application.mainmenu.MainMenuCtrl;
 
 /**
  * An account transaction used to deposit an amount
- * @see AbstractAccountTransactionOperation
+ * @see AccountTransactionCtrl
  * @see UserOptions#DEPOSIT
  */
-public class DepositOperation extends AbstractAccountTransactionOperation {
+public class DepositCtrl extends AccountTransactionCtrl {
 
     /**
      * Initializes a new {@code DepositOperation}
      *
-     * @see AbstractAccountTransactionOperation
+     * @see AccountTransactionCtrl
      */
-    public DepositOperation(BankApplication bankApplication) {
-        super(bankApplication);
+    public DepositCtrl(MainMenuCtrl menu) {
+        super(menu);
     }
 
     /**
      * Deposit an amount into an account
      *
-     * @see AbstractAccountTransactionOperation#execute()
+     * @see AccountTransactionCtrl#execute()
      */
     @Override
     public void execute() {
@@ -36,7 +36,7 @@ public class DepositOperation extends AbstractAccountTransactionOperation {
         Integer accountId = scanAccount();
         Double amount = scanAmount();
 
-        if (customer.getAccountIds().contains(accountId)) {
+        if (menu.getCustomer().getAccountIds().contains(accountId)) {
             accountManager.deposit(accountId, amount);
         }
     }

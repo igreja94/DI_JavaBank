@@ -1,28 +1,28 @@
 package org.academiadecodigo.javabank.application.operations.transaction;
 
-import org.academiadecodigo.javabank.application.BankApplication;
 import org.academiadecodigo.javabank.application.UserOptions;
+import org.academiadecodigo.javabank.application.mainmenu.MainMenuCtrl;
 
 /**
  * An account transaction used to withdraw an amount
- * @see AbstractAccountTransactionOperation
+ * @see AccountTransactionCtrl
  * @see UserOptions#WITHDRAW
  */
-public class WithdrawOperation extends AbstractAccountTransactionOperation {
+public class WithdrawCtrl extends AccountTransactionCtrl {
 
     /**
      * Initializes a new {@code WithdrawOperation}
      *
-     * @see AbstractAccountTransactionOperation
+     * @see AccountTransactionCtrl
      */
-    public WithdrawOperation(BankApplication bankApplication) {
-        super(bankApplication);
+    public WithdrawCtrl(MainMenuCtrl menu) {
+        super(menu);
     }
 
     /**
      * Withdraw an amount from an account
      *
-     * @see AbstractAccountTransactionOperation#execute()
+     * @see AccountTransactionCtrl#execute()
      */
     @Override
     public void execute() {
@@ -36,7 +36,7 @@ public class WithdrawOperation extends AbstractAccountTransactionOperation {
         Integer accountId = scanAccount();
         Double amount = scanAmount();
 
-        if (customer.getAccountIds().contains(accountId)) {
+        if (menu.getCustomer().getAccountIds().contains(accountId)) {
             accountManager.withdraw(accountId, amount);
         }
     }
