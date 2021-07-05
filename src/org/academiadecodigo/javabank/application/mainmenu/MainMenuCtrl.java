@@ -26,7 +26,6 @@ public class MainMenuCtrl {
     public void init() {
 
         mainMenuView = new MainMenuView();
-        userOption = mainMenuView.getMenuOption();
         operationMap = buildOperationsMap();
         menuLoop();
 
@@ -41,6 +40,7 @@ public class MainMenuCtrl {
         }
 
         operationMap.get(userChoice).execute();
+
         menuLoop();
 
     }
