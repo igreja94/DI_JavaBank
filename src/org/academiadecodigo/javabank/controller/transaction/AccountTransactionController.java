@@ -16,3 +16,4 @@ public interface AccountTransactionController extends Controller {
      */
     void submitTransaction(int accountId, double amount);
 }
+

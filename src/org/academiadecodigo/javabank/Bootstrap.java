@@ -7,6 +7,10 @@ import org.academiadecodigo.javabank.controller.transaction.WithdrawalController
 import org.academiadecodigo.javabank.managers.AccountManager;
 import org.academiadecodigo.javabank.model.Bank;
 import org.academiadecodigo.javabank.model.Customer;
+import org.academiadecodigo.javabank.services.AccountSrv;
+import org.academiadecodigo.javabank.services.AuthSrv;
+import org.academiadecodigo.javabank.services.CustomerService;
+import org.academiadecodigo.javabank.services.CustomerSrv;
 import org.academiadecodigo.javabank.view.*;
 
 import java.util.HashMap;
@@ -25,8 +29,6 @@ public class Bootstrap {
     public Bank generateTestData() {
 
         Bank bank = new Bank();
-        AccountManager accountManager = new AccountManager();
-        bank.setAccountManager(accountManager);
 
         Customer c1 = new Customer(1, "Rui");
         Customer c2 = new Customer(2, "Sergio");
@@ -46,6 +48,14 @@ public class Bootstrap {
      */
     public LoginController wireObjects(Bank bank) {
 
+        // init all services
+        CustomerSrv customerSrv = new CustomerSrv();
+        customerSrv.setBank(bank);
+        AuthSrv authSrv = new AuthSrv();
+        authSrv.setCustomerSrv(customerSrv);
+        AccountSrv accountSrv = new AccountSrv();
+
+
         // attach all input to standard i/o
         Prompt prompt = new Prompt(System.in, System.out);
 
@@ -53,46 +63,47 @@ public class Bootstrap {
         LoginController loginController = new LoginController();
         LoginView loginView = new LoginView();
         loginController.setView(loginView);
-        loginController.setBank(bank);
-        loginView.setBank(bank);
+        loginController.setAuth(authSrv);
         loginView.setLoginController(loginController);
         loginView.setPrompt(prompt);
+
 
         // wire main controller and view
         MainController mainController = new MainController();
         MainView mainView = new MainView();
-        mainView.setBank(bank);
-        mainView.setPrompt(prompt);
         mainView.setMainController(mainController);
+        mainView.setLoginController(loginController);
+        mainView.setPrompt(prompt);
         mainController.setView(mainView);
         loginController.setNextController(mainController);
 
         // wire balance controller and view
         BalanceController balanceController = new BalanceController();
         BalanceView balanceView = new BalanceView();
+        balanceView.setLoginController(loginController);
         balanceController.setView(balanceView);
-        balanceView.setBank(bank);
 
         // wire new account controller and view
         NewAccountView newAccountView = new NewAccountView();
         NewAccountController newAccountController = new NewAccountController();
-        newAccountController.setBank(bank);
+        newAccountController.setAccountSrv(accountSrv);
+        newAccountController.setAuthSrv(authSrv);
         newAccountController.setView(newAccountView);
         newAccountView.setNewAccountController(newAccountController);
 
         // wire account transactions controllers and views
         DepositController depositController = new DepositController();
+        depositController.setAccountSrv(accountSrv);
         WithdrawalController withdrawalController = new WithdrawalController();
+        withdrawalController.setAccountSrv(accountSrv);
         AccountTransactionView depositView = new AccountTransactionView();
+        depositView.setLoginController(loginController);
         AccountTransactionView withdrawView = new AccountTransactionView();
-        depositController.setBank(bank);
+        withdrawView.setLoginController(loginController);
         depositController.setView(depositView);
-        withdrawalController.setBank(bank);
         withdrawalController.setView(withdrawView);
-        depositView.setBank(bank);
         depositView.setPrompt(prompt);
         depositView.setTransactionController(depositController);
-        withdrawView.setBank(bank);
         withdrawView.setPrompt(prompt);
         withdrawView.setTransactionController(withdrawalController);
 

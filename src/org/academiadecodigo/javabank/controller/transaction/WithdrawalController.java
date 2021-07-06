@@ -1,10 +1,14 @@
 package org.academiadecodigo.javabank.controller.transaction;
 
+import org.academiadecodigo.javabank.services.AccountSrv;
+
 /**
  * A controller used for withdraw transactions
  * @see AbstractAccountTransactionController
+ *
  */
 public class WithdrawalController extends AbstractAccountTransactionController {
+
 
     /**
      * Withdraws an amount on the account with the given id
@@ -13,6 +17,9 @@ public class WithdrawalController extends AbstractAccountTransactionController {
      */
     @Override
     public void submitTransaction(int accountId, double amount) {
-        bank.getAccountManager().withdraw(accountId, amount);
+        accountSrv.withdraw(accountId, amount);
     }
+
+
+
 }
