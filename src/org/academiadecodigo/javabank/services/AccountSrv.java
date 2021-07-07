@@ -1,10 +1,6 @@
 package org.academiadecodigo.javabank.services;
 
-import org.academiadecodigo.javabank.managers.AccountManager;
-import org.academiadecodigo.javabank.model.Bank;
-import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
-import org.academiadecodigo.javabank.model.account.AccountType;
 
 import java.util.HashMap;
 import java.util.Map;

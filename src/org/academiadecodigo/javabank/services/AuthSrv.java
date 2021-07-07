@@ -24,6 +24,7 @@ public class AuthSrv implements AuthService{
 
     public void setCustomerSrv(CustomerSrv customerSrv) {
         this.customerSrv = customerSrv;
+
     }
 
     public CustomerSrv getCustomerSrv() {

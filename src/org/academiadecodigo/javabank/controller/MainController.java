@@ -19,7 +19,9 @@ public class MainController extends AbstractController {
      * @param controllerMap the controller map to set
      */
     public void setControllerMap(Map<Integer, Controller> controllerMap) {
+
         this.controllerMap = controllerMap;
+
     }
 
     /**
@@ -28,7 +30,6 @@ public class MainController extends AbstractController {
      * @param option the option chosen
      */
     public void onMenuSelection(int option) {
-
         if (option == UserOptions.QUIT.getOption()) {
             return;
         }

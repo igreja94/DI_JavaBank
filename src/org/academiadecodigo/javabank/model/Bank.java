@@ -1,9 +1,6 @@
 package org.academiadecodigo.javabank.model;
 
-import org.academiadecodigo.javabank.managers.AccountManager;
-
 import java.util.HashMap;
-import java.util.Set;
 
 /**
  * The bank entity
@@ -20,7 +17,6 @@ public class Bank {
     }
 
     public HashMap<Integer, Customer> getCustomers() {
-
         return customers;
     }
 

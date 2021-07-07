@@ -17,8 +17,7 @@ public class DepositController extends AbstractAccountTransactionController {
      */
     @Override
     public void submitTransaction(int accountId, double amount) {
-
         accountSrv.deposit(accountId,amount);
-
     }
+
 }

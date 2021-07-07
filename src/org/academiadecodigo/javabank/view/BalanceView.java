@@ -17,16 +17,7 @@ public class BalanceView implements View {
 
     private DecimalFormat df = new DecimalFormat("#.##");
     private LoginController loginController;
-    private Bank bank;
 
-    /**
-     * Sets the bank
-     *
-     * @param bank the bank to set
-     */
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
 
     /**
      * @see View#show()

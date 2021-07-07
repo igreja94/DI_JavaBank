@@ -4,12 +4,10 @@ import org.academiadecodigo.bootcamp.Prompt;
 import org.academiadecodigo.javabank.controller.*;
 import org.academiadecodigo.javabank.controller.transaction.DepositController;
 import org.academiadecodigo.javabank.controller.transaction.WithdrawalController;
-import org.academiadecodigo.javabank.managers.AccountManager;
 import org.academiadecodigo.javabank.model.Bank;
 import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.services.AccountSrv;
 import org.academiadecodigo.javabank.services.AuthSrv;
-import org.academiadecodigo.javabank.services.CustomerService;
 import org.academiadecodigo.javabank.services.CustomerSrv;
 import org.academiadecodigo.javabank.view.*;
 
@@ -66,7 +64,6 @@ public class Bootstrap {
         loginController.setAuth(authSrv);
         loginView.setLoginController(loginController);
         loginView.setPrompt(prompt);
-
 
         // wire main controller and view
         MainController mainController = new MainController();

@@ -20,6 +20,4 @@ public class WithdrawalController extends AbstractAccountTransactionController {
         accountSrv.withdraw(accountId, amount);
     }
 
-
-
 }
