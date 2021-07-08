@@ -1,4 +1,5 @@
-*.iml
-out
 .idea
-build
+target
+out
+*.iml
+.DS_Store
