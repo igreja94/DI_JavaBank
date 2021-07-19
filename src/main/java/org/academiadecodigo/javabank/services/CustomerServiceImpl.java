@@ -77,11 +77,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         query.setParameter("id",id);
 
-
         List<AbstractAccount> accounts = query.getResultList();
 
         double balance = 0;
-
         for (AbstractAccount account : accounts) {
             balance += account.getBalance();
         }
