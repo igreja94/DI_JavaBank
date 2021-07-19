@@ -18,8 +18,7 @@ public class Customer extends AbstractModel {
     @OneToMany(
             cascade = {CascadeType.ALL},
             orphanRemoval = true,
-            // use Category foreign key on Product table to establish
-            // the many-to-one relationship instead of a join table
+            fetch = FetchType.EAGER,
             mappedBy = "customer"
     )
     private List<AbstractAccount> accounts = new ArrayList<>();

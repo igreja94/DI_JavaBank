@@ -10,8 +10,8 @@ import javax.persistence.*;
  * @see Account
  */
 
-@Entity(name="AccountSingleTable")
-@Table(name = "account_single_table")
+@Entity(name="Account")
+@Table(name = "Accounts")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(
         name = "account",

@@ -7,6 +7,7 @@ import org.academiadecodigo.javabank.model.account.Account;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import java.util.*;
 
 /**
@@ -14,23 +15,22 @@ import java.util.*;
  */
 public class CustomerServiceImpl implements CustomerService {
 
-    private Map<Integer, Customer> customerMap = new HashMap<>();
-
-    /**
-     * Gets the next account id
-     *
-     * @return the next id
-     */
-    private Integer getNextId() {
-        return customerMap.isEmpty() ? 1 : Collections.max(customerMap.keySet()) + 1;
-    }
-
     /**
      * @see CustomerService#get(Integer)
      */
     @Override
     public Customer get(Integer id) {
-        return customerMap.get(id);
+
+        EntityManager em = HFManager.getManager();
+
+        try {
+            return em.find(Customer.class, id);
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     /**
@@ -38,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public List<Customer> list() {
-        return new ArrayList<>(customerMap.values());
+        return null;
     }
 
     /**
@@ -47,14 +47,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Set<Integer> listCustomerAccountIds(Integer id) {
 
-        Set<Integer> accountIds = new HashSet<>();
-        List<AbstractAccount> accountList = customerMap.get(id).getAccounts();
 
-        for (Account account : accountList) {
-            accountIds.add(account.getId());
+        EntityManager em = HFManager.getManager();
+
+        Customer customer = em.find(Customer.class,id);
+
+        Set<Integer> accoundIds = new HashSet<>();
+
+        for (AbstractAccount account : customer.getAccounts()) {
+            accoundIds.add(account.getId());
         }
 
-        return accountIds;
+        em.close();
+
+        return accoundIds;
+
     }
 
     /**
@@ -63,14 +70,24 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public double getBalance(int id) {
 
-        List<AbstractAccount> accounts = customerMap.get(id).getAccounts();
+        EntityManager em = HFManager.getManager();
+
+        TypedQuery<AbstractAccount> query =
+                em.createQuery("SELECT account FROM Account account WHERE account.customer.id = :id", AbstractAccount.class);
+
+        query.setParameter("id",id);
+
+
+        List<AbstractAccount> accounts = query.getResultList();
 
         double balance = 0;
-        for (Account account : accounts) {
+
+        for (AbstractAccount account : accounts) {
             balance += account.getBalance();
         }
 
         return balance;
+
     }
 
     /**
@@ -79,11 +96,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void add(Customer customer) {
 
-        if (customer.getId() == null) {
-            customer.setId(getNextId());
-        }
-
-        customerMap.put(customer.getId(), customer);
+        EntityManager em = HFManager.getManager();
+        em.getTransaction().begin();
+        em.persist(customer);
+        em.getTransaction().commit();
+        em.close();
 
     }
 }
