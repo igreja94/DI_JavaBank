@@ -1,8 +1,12 @@
 package org.academiadecodigo.javabank.services;
 
+import org.academiadecodigo.javabank.jpa.HFManager;
 import org.academiadecodigo.javabank.model.Customer;
+import org.academiadecodigo.javabank.model.account.AbstractAccount;
 import org.academiadecodigo.javabank.model.account.Account;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.*;
 
 /**
@@ -44,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Set<Integer> listCustomerAccountIds(Integer id) {
 
         Set<Integer> accountIds = new HashSet<>();
-        List<Account> accountList = customerMap.get(id).getAccounts();
+        List<AbstractAccount> accountList = customerMap.get(id).getAccounts();
 
         for (Account account : accountList) {
             accountIds.add(account.getId());
@@ -59,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public double getBalance(int id) {
 
-        List<Account> accounts = customerMap.get(id).getAccounts();
+        List<AbstractAccount> accounts = customerMap.get(id).getAccounts();
 
         double balance = 0;
         for (Account account : accounts) {
@@ -80,5 +84,6 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         customerMap.put(customer.getId(), customer);
+
     }
 }

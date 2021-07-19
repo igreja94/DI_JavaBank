@@ -2,6 +2,7 @@ package org.academiadecodigo.javabank.controller;
 
 import org.academiadecodigo.javabank.factories.AccountFactory;
 import org.academiadecodigo.javabank.model.Customer;
+import org.academiadecodigo.javabank.model.account.AbstractAccount;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.services.AccountService;
@@ -66,7 +67,7 @@ public class NewAccountControllerTest {
 
         // verify the interaction with auth service and customer
         verify(authService).getAccessingCustomer();
-        verify(customer).addAccount(account);
+        verify(customer).addAccount((AbstractAccount) account);
 
         // check if new account ID matches mock account's ID
         assertEquals(id, (int) newAccountController.getNewAccountId());

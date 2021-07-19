@@ -1,10 +1,18 @@
 package org.academiadecodigo.javabank.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+
 /**
  * A generic model entity to be used as a base for concrete types of models
  */
+@MappedSuperclass
 public abstract class AbstractModel implements Model {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**

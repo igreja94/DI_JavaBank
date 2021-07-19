@@ -1,6 +1,7 @@
 package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.model.Customer;
+import org.academiadecodigo.javabank.model.account.AbstractAccount;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.junit.Before;
 import org.junit.Test;
@@ -108,9 +109,9 @@ public class CustomerServiceImplTest {
         when(a2.getId()).thenReturn(2);
 
         // pretend these fake accounts are from the fake customer
-        List<Account> accounts = new LinkedList<>();
-        accounts.add(a1);
-        accounts.add(a2);
+        List<AbstractAccount> accounts = new LinkedList<>();
+        accounts.add((AbstractAccount) a1);
+        accounts.add((AbstractAccount) a2);
         when(c.getAccounts()).thenReturn(accounts);
 
         // check customer balance after crediting accounts
@@ -138,9 +139,9 @@ public class CustomerServiceImplTest {
         when(a2.getId()).thenReturn(acc2Id);
 
         // pretend these fake accounts are from the fake customer
-        List<Account> accounts = new LinkedList<>();
-        accounts.add(a1);
-        accounts.add(a2);
+        List<AbstractAccount> accounts = new LinkedList<>();
+        accounts.add((AbstractAccount) a1);
+        accounts.add((AbstractAccount) a2);
         when(c.getAccounts()).thenReturn(accounts);
 
         // create a set of new customer's account ids

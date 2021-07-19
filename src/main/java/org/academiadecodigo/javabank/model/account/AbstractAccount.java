@@ -1,14 +1,28 @@
 package org.academiadecodigo.javabank.model.account;
 
 import org.academiadecodigo.javabank.model.AbstractModel;
+import org.academiadecodigo.javabank.model.Customer;
+
+import javax.persistence.*;
 
 /**
  * A generic account model entity to be used as a base for concrete types of accounts
  * @see Account
  */
+
+@Entity(name="AccountSingleTable")
+@Table(name = "account_single_table")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+        name = "account",
+        discriminatorType = DiscriminatorType.STRING
+)
 public abstract class AbstractAccount extends AbstractModel implements Account {
 
     private double balance = 0;
+
+    @ManyToOne
+    private Customer customer;
 
     /**
      * @see Account#getBalance()
@@ -65,5 +79,13 @@ public abstract class AbstractAccount extends AbstractModel implements Account {
      */
     public boolean canWithdraw() {
         return true;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }
