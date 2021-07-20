@@ -1,3 +1,4 @@
+/*
 package org.academiadecodigo.javabank.services.jpa;
 
 import org.academiadecodigo.javabank.model.Customer;
@@ -238,3 +239,4 @@ public class JpaCustomerServiceIntegrationTest extends JpaIntegrationTestHelper 
 
     }
 }
+*/

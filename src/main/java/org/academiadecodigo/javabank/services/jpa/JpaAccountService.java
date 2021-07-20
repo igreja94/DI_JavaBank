@@ -3,6 +3,7 @@ package org.academiadecodigo.javabank.services.jpa;
 import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.persistence.JpaSessionManager;
 import org.academiadecodigo.javabank.persistence.JpaTransactionManager;
+import org.academiadecodigo.javabank.persistence.dao.jpa.AccountDao;
 import org.academiadecodigo.javabank.services.AccountService;
 
 import javax.persistence.EntityManager;
@@ -15,8 +16,9 @@ import java.util.Optional;
  */
 public class JpaAccountService extends AbstractJpaService<Account> implements AccountService {
 
-    public JpaAccountService(JpaTransactionManager tm) {
-        super(tm, Account.class);
+
+    public JpaAccountService(JpaTransactionManager tm,AccountDao dao) {
+        super(tm,dao, Account.class);
     }
 
     /**
@@ -31,7 +33,7 @@ public class JpaAccountService extends AbstractJpaService<Account> implements Ac
 
             tm.beginWrite();
 
-            Optional<Account> account = Optional.ofNullable(tm.getEm().find(Account.class, id));
+            Optional<Account> account = Optional.ofNullable(dao.findById(Account.class,id));
 
             if (!account.isPresent()) {
                 tm.rollback();
@@ -64,7 +66,7 @@ public class JpaAccountService extends AbstractJpaService<Account> implements Ac
 
             tm.beginWrite();
 
-            Optional<Account> account = Optional.ofNullable(tm.getEm().find(Account.class, id));
+            Optional<Account> account = Optional.ofNullable(dao.findById(Account.class,id));
 
             if (!account.isPresent()) {
                 tm.rollback();
@@ -96,8 +98,8 @@ public class JpaAccountService extends AbstractJpaService<Account> implements Ac
 
             tm.beginWrite();
 
-            Optional<Account> srcAccount = Optional.ofNullable(tm.getEm().find(Account.class, srcId));
-            Optional<Account> dstAccount = Optional.ofNullable(tm.getEm().find(Account.class, dstId));
+            Optional<Account> srcAccount = Optional.ofNullable(dao.findById(Account.class,srcId));
+            Optional<Account> dstAccount = Optional.ofNullable(dao.findById(Account.class,dstId));
 
             if (!srcAccount.isPresent() || !dstAccount.isPresent()) {
                 tm.rollback();

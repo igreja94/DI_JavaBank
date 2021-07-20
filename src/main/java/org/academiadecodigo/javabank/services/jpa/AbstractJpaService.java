@@ -3,6 +3,7 @@ package org.academiadecodigo.javabank.services.jpa;
 import org.academiadecodigo.javabank.model.AbstractModel;
 import org.academiadecodigo.javabank.persistence.JpaSessionManager;
 import org.academiadecodigo.javabank.persistence.JpaTransactionManager;
+import org.academiadecodigo.javabank.persistence.dao.jpa.GenericDao;
 import org.academiadecodigo.javabank.services.CRUDService;
 
 import javax.persistence.EntityManager;
@@ -21,11 +22,13 @@ import java.util.List;
 public abstract class AbstractJpaService<T extends AbstractModel> implements CRUDService<T> {
 
     protected JpaTransactionManager tm;
+    protected GenericDao<T> dao;
     private Class<T> modelType;
 
 
-    public AbstractJpaService(JpaTransactionManager tm, Class<T> modelType) {
+    public AbstractJpaService(JpaTransactionManager tm, GenericDao<T> dao, Class<T> modelType) {
         this.tm = tm;
+        this.dao = dao;
         this.modelType = modelType;
     }
 
@@ -39,9 +42,7 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
 
         try {
 
-            CriteriaQuery<T> criteriaQuery = tm.getEm().getCriteriaBuilder().createQuery(modelType);
-            Root<T> root = criteriaQuery.from(modelType);
-            return tm.getEm().createQuery(criteriaQuery).getResultList();
+            return dao.findAll(modelType);
 
         } finally {
             if (tm.getEm() != null) {
@@ -60,7 +61,7 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
 
         try {
 
-            return tm.getEm().find(modelType, id);
+            return dao.findById(modelType,id);
 
         } finally {
 
@@ -80,7 +81,7 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
         try {
 
             tm.beginWrite();
-            T savedObject = tm.getEm().merge(modelObject);
+            T savedObject = dao.saveOrUpdate(modelObject);
             tm.commit();
 
             return savedObject;
@@ -108,7 +109,7 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
         try {
 
             tm.beginWrite();
-            tm.getEm().remove(tm.getEm().find(modelType, id));
+            dao.delete(modelType,id);
             tm.commit();
 
         } catch (RollbackException ex) {
