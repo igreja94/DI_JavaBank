@@ -1,4 +1,4 @@
 package org.academiadecodigo.javabank.persistence.dao.jpa;
 
-public class RecipientDao {
+public class RecipientDaoImpl {
 }

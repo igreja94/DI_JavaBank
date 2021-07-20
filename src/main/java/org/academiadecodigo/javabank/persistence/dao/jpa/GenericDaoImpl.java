@@ -10,13 +10,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public abstract class GenericDao<T> implements Dao<T> {
+public abstract class GenericDaoImpl<T> implements Dao<T> {
 
     JpaSessionManager sm;
 
     public void setSm(JpaSessionManager sm) {
         this.sm = sm;
     }
+
 
     @Override
     public List<T> findAll(Class<T> type) {

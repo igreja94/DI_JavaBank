@@ -1,16 +1,11 @@
 package org.academiadecodigo.javabank.services.jpa;
 
 import org.academiadecodigo.javabank.model.AbstractModel;
-import org.academiadecodigo.javabank.persistence.JpaSessionManager;
 import org.academiadecodigo.javabank.persistence.JpaTransactionManager;
-import org.academiadecodigo.javabank.persistence.dao.jpa.GenericDao;
+import org.academiadecodigo.javabank.persistence.dao.jpa.GenericDaoImpl;
 import org.academiadecodigo.javabank.services.CRUDService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.RollbackException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -22,11 +17,11 @@ import java.util.List;
 public abstract class AbstractJpaService<T extends AbstractModel> implements CRUDService<T> {
 
     protected JpaTransactionManager tm;
-    protected GenericDao<T> dao;
+    protected GenericDaoImpl<T> dao;
     private Class<T> modelType;
 
 
-    public AbstractJpaService(JpaTransactionManager tm, GenericDao<T> dao, Class<T> modelType) {
+    public AbstractJpaService(JpaTransactionManager tm, GenericDaoImpl<T> dao, Class<T> modelType) {
         this.tm = tm;
         this.dao = dao;
         this.modelType = modelType;
@@ -65,8 +60,9 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
 
         } finally {
 
-            tm.stopSession();
-
+            if (tm.getEm() != null) {
+                tm.stopSession();
+            }
         }
     }
 
@@ -92,8 +88,9 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
             return null;
 
         } finally {
+
             if (tm.getEm() != null) {
-                tm.getEm().close();
+                tm.stopSession();
             }
         }
     }

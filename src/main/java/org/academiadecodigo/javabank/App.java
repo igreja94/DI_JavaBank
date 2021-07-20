@@ -2,15 +2,13 @@ package org.academiadecodigo.javabank;
 
 import org.academiadecodigo.javabank.controller.Controller;
 import org.academiadecodigo.javabank.persistence.*;
-import org.academiadecodigo.javabank.persistence.dao.jpa.AccountDao;
-import org.academiadecodigo.javabank.persistence.dao.jpa.CustomerDao;
+import org.academiadecodigo.javabank.persistence.dao.jpa.AccountDaoImpl;
+import org.academiadecodigo.javabank.persistence.dao.jpa.CustomerDaoImpl;
 import org.academiadecodigo.javabank.services.AuthServiceImpl;
 import org.academiadecodigo.javabank.services.jpa.JpaAccountService;
 import org.academiadecodigo.javabank.services.jpa.JpaCustomerService;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.sql.SQLException;
 
 public class App {
 
@@ -34,9 +32,9 @@ public class App {
         sm.setEmf(emf);
         JpaTransactionManager tm = new JpaTransactionManager();
         tm.setSm(sm);
-        AccountDao accDao = new AccountDao();
+        AccountDaoImpl accDao = new AccountDaoImpl();
         accDao.setSm(sm);
-        CustomerDao cusDao = new CustomerDao();
+        CustomerDaoImpl cusDao = new CustomerDaoImpl();
         cusDao.setSm(sm);
 
 

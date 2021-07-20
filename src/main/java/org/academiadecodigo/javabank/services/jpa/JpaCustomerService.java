@@ -3,15 +3,10 @@ package org.academiadecodigo.javabank.services.jpa;
 import org.academiadecodigo.javabank.model.AbstractModel;
 import org.academiadecodigo.javabank.model.Customer;
 import org.academiadecodigo.javabank.model.account.Account;
-import org.academiadecodigo.javabank.persistence.JpaSessionManager;
 import org.academiadecodigo.javabank.persistence.JpaTransactionManager;
-import org.academiadecodigo.javabank.persistence.dao.jpa.CustomerDao;
+import org.academiadecodigo.javabank.persistence.dao.jpa.CustomerDaoImpl;
 import org.academiadecodigo.javabank.services.CustomerService;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class JpaCustomerService extends AbstractJpaService<Customer> implements CustomerService {
 
-    public JpaCustomerService(JpaTransactionManager tm, CustomerDao dao) {
+    public JpaCustomerService(JpaTransactionManager tm, CustomerDaoImpl dao) {
         super(tm,dao, Customer.class);
     }
 
