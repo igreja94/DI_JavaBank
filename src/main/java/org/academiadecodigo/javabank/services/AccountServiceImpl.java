@@ -64,7 +64,8 @@ public class AccountServiceImpl implements AccountService {
 
     public void transfer (int srcId, int dstId, double amount) {
 
-/*        Account srcAccount = accountMap.get(srcId);
+        /*
+        Account srcAccount = accountMap.get(srcId);
         Account dstAccount = accountMap.get(dstId);
 
         // make sure transaction can be performed
