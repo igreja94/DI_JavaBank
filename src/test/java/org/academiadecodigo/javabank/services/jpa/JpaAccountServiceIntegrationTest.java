@@ -4,6 +4,7 @@ import org.academiadecodigo.javabank.model.account.Account;
 import org.academiadecodigo.javabank.model.account.AccountType;
 import org.academiadecodigo.javabank.model.account.CheckingAccount;
 import org.academiadecodigo.javabank.persistence.JpaIntegrationTestHelper;
+import org.academiadecodigo.javabank.persistence.JpaTransactionManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class JpaAccountServiceIntegrationTest extends JpaIntegrationTestHelper {
 
     @Before
     public void setup() {
-        as = new JpaAccountService(emf);
+        as = new JpaAccountService(new JpaTransactionManager());
     }
 
 

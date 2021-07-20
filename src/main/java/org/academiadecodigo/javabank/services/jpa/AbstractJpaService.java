@@ -1,6 +1,8 @@
 package org.academiadecodigo.javabank.services.jpa;
 
 import org.academiadecodigo.javabank.model.AbstractModel;
+import org.academiadecodigo.javabank.persistence.JpaSessionManager;
+import org.academiadecodigo.javabank.persistence.JpaTransactionManager;
 import org.academiadecodigo.javabank.services.CRUDService;
 
 import javax.persistence.EntityManager;
@@ -12,22 +14,18 @@ import java.util.List;
 
 /**
  * A generic jpa service to be used as a base for concrete jpa service implementations
- * @see CRUDService
+ *
  * @param <T> the model type
+ * @see CRUDService
  */
 public abstract class AbstractJpaService<T extends AbstractModel> implements CRUDService<T> {
 
-    protected EntityManagerFactory emf;
+    protected JpaTransactionManager tm;
     private Class<T> modelType;
 
-    /**
-     * Initializes a new {@code JPA Service} instance given an entity manager factory and a model type
-     *
-     * @param emf the entity manager factory
-     * @param modelType the model type
-     */
-    public AbstractJpaService(EntityManagerFactory emf, Class<T> modelType) {
-        this.emf = emf;
+
+    public AbstractJpaService(JpaTransactionManager tm, Class<T> modelType) {
+        this.tm = tm;
         this.modelType = modelType;
     }
 
@@ -37,17 +35,17 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
     @Override
     public List<T> list() {
 
-        EntityManager em = emf.createEntityManager();
+        tm.beginRead();
 
         try {
 
-            CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(modelType);
+            CriteriaQuery<T> criteriaQuery = tm.getEm().getCriteriaBuilder().createQuery(modelType);
             Root<T> root = criteriaQuery.from(modelType);
-            return em.createQuery(criteriaQuery).getResultList();
+            return tm.getEm().createQuery(criteriaQuery).getResultList();
 
         } finally {
-            if (em != null) {
-                em.close();
+            if (tm.getEm() != null) {
+                tm.stopSession();
             }
         }
     }
@@ -58,16 +56,16 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
     @Override
     public T get(Integer id) {
 
-        EntityManager em = emf.createEntityManager();
+        tm.beginRead();
 
         try {
 
-            return em.find(modelType, id);
+            return tm.getEm().find(modelType, id);
 
         } finally {
-            if (em != null) {
-                em.close();
-            }
+
+            tm.stopSession();
+
         }
     }
 
@@ -77,24 +75,24 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
     @Override
     public T save(T modelObject) {
 
-        EntityManager em = emf.createEntityManager();
+        tm.beginRead();
 
         try {
 
-            em.getTransaction().begin();
-            T savedObject = em.merge(modelObject);
-            em.getTransaction().commit();
+            tm.beginWrite();
+            T savedObject = tm.getEm().merge(modelObject);
+            tm.commit();
 
             return savedObject;
 
         } catch (RollbackException ex) {
 
-            em.getTransaction().rollback();
+            tm.rollback();
             return null;
 
         } finally {
-            if (em != null) {
-                em.close();
+            if (tm.getEm() != null) {
+                tm.getEm().close();
             }
         }
     }
@@ -105,21 +103,21 @@ public abstract class AbstractJpaService<T extends AbstractModel> implements CRU
     @Override
     public void delete(Integer id) {
 
-        EntityManager em = emf.createEntityManager();
+        tm.beginRead();
 
         try {
 
-            em.getTransaction().begin();
-            em.remove(em.find(modelType, id));
-            em.getTransaction().commit();
+            tm.beginWrite();
+            tm.getEm().remove(tm.getEm().find(modelType, id));
+            tm.commit();
 
         } catch (RollbackException ex) {
 
-            em.getTransaction().rollback();
+            tm.rollback();
 
         } finally {
-            if (em != null) {
-                em.close();
+            if (tm.getEm() != null) {
+                tm.stopSession();
             }
         }
     }
