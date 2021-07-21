@@ -56,8 +56,6 @@ public class Bootstrap {
      */
     public Controller wireObjects() {
 
-        // attach all input to standard i/o
-        Prompt prompt = new Prompt(System.in, System.out);
 
         // wire services
         authService.setCustomerService(customerService);
