@@ -54,8 +54,8 @@ public class Bootstrap {
      *
      * @return the login controller
      */
-    public Controller wireObjects() {
-
+/*    public Controller wireObjects() {
+*//*
 
         // wire services
         authService.setCustomerService(customerService);
@@ -130,6 +130,6 @@ public class Bootstrap {
 
         mainController.setControllerMap(controllerMap);
 
-        return loginController;
-    }
+        return loginController;*//*
+    }*/
 }
