@@ -7,8 +7,24 @@
         <property name="locations" value="classpath:javabank.properties"/>
     </bean>
 
-    <import resource="persistence.xml"/>
-    <import resource="services.xml"/>
-    <import resource="presentation.xml"/>
+    <beans>
+
+        <!-- Use spring servlet for all requests, including static resources -->
+        <mvc:default-servlet-handler/>
+
+        <!-- look for spring annotations inside the controller package -->
+        <mvc:annotation-driven/>
+        <context:component-scan base-package="org.academiadecodigo.bootcamp"/>
+
+
+        <!-- configure the view resolver -->
+        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/"/>
+            <property name="suffix" value=".jsp"/>
+        </bean>
+
+    </beans>
+
+
 
 </beans>
