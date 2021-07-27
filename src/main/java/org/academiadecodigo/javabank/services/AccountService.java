@@ -1,10 +1,13 @@
 package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.persistence.model.account.Account;
+import org.springframework.stereotype.Service;
 
 /**
  * Common interface for account services, provides methods to manage accounts and perform account transactions
  */
+
+
 public interface AccountService {
 
     /**
