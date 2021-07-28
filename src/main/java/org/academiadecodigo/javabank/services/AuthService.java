@@ -1,10 +1,13 @@
 package org.academiadecodigo.javabank.services;
 
 import org.academiadecodigo.javabank.persistence.model.Customer;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 /**
  * Common interface for authentication services, provides method for customer authentication
  */
+
 public interface AuthService {
 
     /**
