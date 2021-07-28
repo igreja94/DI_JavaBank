@@ -89,4 +89,12 @@ public class CustomerServiceImpl implements CustomerService {
 
         return new ArrayList<>(customer.getRecipients());
     }
+
+    @Transactional
+    public void delete(Integer id) {
+
+        customerDao.delete(id);
+
+    }
+
 }

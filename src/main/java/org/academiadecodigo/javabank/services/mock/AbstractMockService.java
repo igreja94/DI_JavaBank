@@ -23,4 +23,6 @@ public abstract class AbstractMockService<T extends AbstractModel> {
     protected Integer getNextId() {
         return modelMap.isEmpty() ? 1 : Collections.max(modelMap.keySet()) + 1;
     }
+
+
 }

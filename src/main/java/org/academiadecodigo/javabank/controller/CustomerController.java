@@ -50,4 +50,13 @@ public class CustomerController {
 
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/delete/{id}")
+    public String deleteCustomer(@PathVariable Integer id) {
+
+        customerService.delete(id);
+
+        return "redirect:/customer/list";
+
+    }
+
 }
