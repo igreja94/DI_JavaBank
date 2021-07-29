@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>JavaBank</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          modelType="text/css"/>
+    <script modelType="application/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script modelType="application/javascript" async
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Customer Configuration</h2>
+    <div>
+        <form th:object="${customer}" th:action="@{/customer/add}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <p>
+                <label>First Name</label>
+                <input type="text" th:field="*{firstName}"/>
+            </p>
+            <p>
+                <label>Last Name</label>
+                <input type="text" th:field="*{lastName}"/>
+            </p>
+            <p>
+                <label>Email</label>
+                <input type="text" th:field="*{email}"/>
+            </p>
+            <p>
+                <label>Phone Number</label>
+                <input type="text" th:field="*{phone}"/>
+            </p>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+

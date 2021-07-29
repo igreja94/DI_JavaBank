@@ -5,10 +5,9 @@ import org.academiadecodigo.javabank.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controller responsible for rendering {@link Customer} related views
@@ -44,7 +43,7 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public String getCustomer(@PathVariable Integer id, Model model) {
 
-        model.addAttribute("customer",customerService.get(id));
+        model.addAttribute("customer", customerService.get(id));
 
         return "customer/viewcustomer";
 
@@ -58,5 +57,36 @@ public class CustomerController {
         return "redirect:/customer/list";
 
     }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/add")
+    public String addCustomer(Model model) {
+
+        Customer customer = new Customer();
+
+        model.addAttribute("customer", customer);
+
+        return "customer/add";
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/add")
+    public String persistCustomer(@ModelAttribute Customer customer) {
+
+        Customer persistedCustomer = customerService.add(customer);
+
+
+        return "redirect:/customer/" + persistedCustomer.getId();
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/edit/{ID}")
+    public String editCustomer(Model model,@PathVariable Integer ID) {
+
+        model.addAttribute("customer", customerService.get(ID));
+
+        return "customer/add";
+
+    }
+
 
 }

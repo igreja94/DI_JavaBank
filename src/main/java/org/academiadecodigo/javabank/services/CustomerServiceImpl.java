@@ -97,4 +97,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    @Transactional
+    public Customer add(Customer customer) {
+
+        return customerDao.saveOrUpdate(customer);
+
+    }
+
 }

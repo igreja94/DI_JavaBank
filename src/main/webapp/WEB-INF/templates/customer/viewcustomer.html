@@ -46,7 +46,7 @@
     </table>
 </div>
 <div class="container">
-    <form method="get" action="/javabank1/customer/list">
+    <form method="get" th:action="@{/customer/edit/{id}(id=${customer.id})}">
         <button type="submit">Edit Customer</button>
     </form>
 
