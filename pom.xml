@@ -140,8 +140,6 @@
                     <url>http://localhost:8080/manager/text</url>
                     <server>tomcat</server>
                     <path>/javabank2</path>
-                    <username>maven</username>
-                    <password>maven</password>
                 </configuration>
             </plugin>
 
